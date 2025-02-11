@@ -6,6 +6,8 @@ import 'package:proverbapp/initial_page.dart';
 import 'package:proverbapp/services/authservice.dart';
 import 'package:proverbapp/signin.dart';
 import 'package:proverbapp/signup.dart';
+import 'package:proverbapp/homepage.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false, // Hide the debug banner
+
       routes: {
         '/': (context) => InitialView(onSignUpClicked: () {
           /*Navigator.push(
@@ -54,6 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         '/register': (context) => SignUpPage(),
         '/login': (context) => SignInPage(),
+        '/HOME':(context) => HomeView()
       },
 
     initialRoute: '/', // This should point to the starting route

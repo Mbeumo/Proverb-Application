@@ -74,13 +74,15 @@ class _InitialViewState extends State<InitialView> with WidgetsBindingObserver  
     if (_isAutoScrolling && mounted) {
       //_isAutoScrolling = true;
       _autoScrollTimer = Timer(const Duration(seconds: 3), () {
-        if (_isAutoScrolling && mounted) {
+        if (_isAutoScrolling && mounted ) {
           final nextPage = (_current + 1) % imagePaths.length;
-          _controller.animateToPage(
-            nextPage,
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.easeInOut,
-          );
+          if( _controller != null){
+            _controller.animateToPage(
+              nextPage,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          }
           _startAutoScroll();
         }
 

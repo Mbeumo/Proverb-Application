@@ -42,6 +42,8 @@ class AuthService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign in successful')),
       );
+      Navigator.pushNamed(context, '/HOME');
+
       /*Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => InitialView()),//put the home page or the class name f

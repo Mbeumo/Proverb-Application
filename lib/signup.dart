@@ -11,6 +11,7 @@ class SignUpPage extends StatefulWidget {
     final AuthService objauthservice = AuthService();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+    final String imagePath='assets/Auth/register.jpeg';
 
     Widget build(BuildContext context) {
       return Scaffold(
@@ -20,8 +21,12 @@ class SignUpPage extends StatefulWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.network('https://www.example.com/your-image.jpg'),
-              // Replace with your image URL
+              Flexible(
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
+              ),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(labelText: 'Email'),
@@ -36,6 +41,9 @@ class SignUpPage extends StatefulWidget {
                 onPressed: () async{
                   await objauthservice.signUp(
                       context:context, email:_emailController.text, password:_passwordController.text);
+                  await objauthservice.signIn(
+                      context: context, email:_emailController.text, password:_passwordController.text
+                  );
                 },
                 child: Text('Sign Up'),
               ),
