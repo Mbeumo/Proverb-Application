@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "239990276254",
+    "project_id": "proverb-application",
+    "storage_bucket": "proverb-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239990276254:android:c43ee027355c77bbc57b8f",
+        "android_client_info": {
+          "package_name": "com.briands.proverbapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-H4RzaojNL7O4OZtlCsrennnuZNgYNAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239990276254:android:c32d1fb077ca0ca9c57b8f",
+        "android_client_info": {
+          "package_name": "com.briands.proverbapp.proverbapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-H4RzaojNL7O4OZtlCsrennnuZNgYNAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
