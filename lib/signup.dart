@@ -13,7 +13,8 @@ class SignUpPage extends StatefulWidget {
     final TextEditingController _passwordController = TextEditingController();
     final String imagePath='assets/Auth/register.jpeg';
 
-    Widget build(BuildContext context) {
+    @override
+  Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(title: Text('Sign Up')),
         body: Padding(

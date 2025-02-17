@@ -1,49 +1,116 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proverbapp/firebase_options.dart';
 import 'package:proverbapp/initial_page.dart';
 import 'package:proverbapp/services/authservice.dart';
+import 'package:proverbapp/services/storageservice.dart';
+import 'package:proverbapp/services/translation.dart';
+import 'package:proverbapp/settings.dart';
 import 'package:proverbapp/signin.dart';
 import 'package:proverbapp/signup.dart';
 import 'package:proverbapp/homepage.dart';
-
+import 'package:proverbapp/account.dart';
+import 'package:proverbapp/editprofile.dart';
+import 'package:proverbapp/biblesproverb.dart';
+import 'package:proverbapp/verseScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'aboutus.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isDarkMode = prefs.getBool('darkMode') ?? false;
+  String selectedLanguage = prefs.getString('language') ?? 'English';
+  runApp(MyApp(isDarkMode: isDarkMode, selectedLanguage: selectedLanguage));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+
+  final bool isDarkMode;
+  final String selectedLanguage;
+
+  MyApp({super.key,required this.isDarkMode, required this.selectedLanguage});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+// This widget is the root of your application.
+}
+class _MyAppState extends State<MyApp> {
+  late bool isDarkMode;
+  late String selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    isDarkMode = widget.isDarkMode;
+    selectedLanguage = widget.selectedLanguage;
+  }
+  void _updateDarkMode(bool value) {
+    setState(() {
+      isDarkMode = value;
+    });
+  }
+  void _updateLanguageParam(String value) {
+    setState(() {
+      selectedLanguage = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      theme:  isDarkMode
+          ? ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark, // Ensure dark mode brightness),
       ),
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: Colors.white), // Example
+        bodyMedium: TextStyle(
+        fontSize: 16, color: Colors.grey[300]), // Example
+        headlineMedium:TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,color: Colors.white),
+        labelSmall: TextStyle(
+        fontSize: 12, color: Colors.grey[400]), // Example
+        ),
+    ): ThemeData.light().copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.deepPurple,
+        brightness: Brightness.light, // Ensure light mode brightness
+      ),
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87), // Example
+        bodyMedium: TextStyle(
+            fontSize: 16,
+            color: Colors.black87), // Example
+        headlineMedium: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87),
+        labelSmall: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600]), // Example
+      )
+    ),
       debugShowCheckedModeBanner: false, // Hide the debug banner
-
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''), // English
+        Locale('es', ''), // Spanish
+        Locale('fr', ''), // French
+      ],
+      locale: Locale(selectedLanguage.toLowerCase(), ''),
       routes: {
         '/': (context) => InitialView(onSignUpClicked: () {
           /*Navigator.push(
@@ -58,13 +125,21 @@ class MyApp extends StatelessWidget {
         ),
         '/register': (context) => SignUpPage(),
         '/login': (context) => SignInPage(),
-        '/HOME':(context) => HomeView()
+        '/HOME':(context) => HomeView(),
+        '/account':(context) => AccountView(authService: AuthService(),),
+        '/editProfile':(context) => EditProfileView(authService: AuthService(),storage: StorageService(),),
+        '/proverbchap':(context) => ChapterListScreen(),
+        '/verseInChap': (context) => VerseListScreen(chapterId: ModalRoute.of(context)!.settings.arguments as String),
+        '/settings': (context) => SettingsView(onDarkModeChanged: _updateDarkMode,onLanguageChanged: _updateLanguageParam,),
+        '/about':(context) => AboutPage(),
       },
 
-    initialRoute: '/', // This should point to the starting route
+    initialRoute: '/', // This is the starting route InitialView()
     );
   }
 }
+
+
 /*
   class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

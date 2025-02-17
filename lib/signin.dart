@@ -30,10 +30,40 @@ class _SignInPageState extends State<SignInPage> {
             TextField(
               controller: _emailController,
               decoration: InputDecoration(labelText: 'Email'),
+              style: Theme.of(context).textTheme.labelSmall
+            //InputDecoration(
+              //                 labelText: 'Email',
+              //                 labelStyle: Theme.of(context).textTheme.labelSmall,
+              //                 hintStyle: TextStyle(
+              //                   color: Theme.of(context).brightness == Brightness.dark
+              //                       ? Colors.grey[400]
+              //                       : Colors.grey[600],
+              //                 ),
+              //                 enabledBorder: UnderlineInputBorder(
+              //                   borderSide: BorderSide(
+              //                     color: Theme.of(context).brightness == Brightness.dark
+              //                         ? Colors.grey[400]!
+              //                         : Colors.grey[600]!,
+              //                   ),
+              //                 ),
+              //                 focusedBorder: UnderlineInputBorder(
+              //                   borderSide: BorderSide(
+              //                     color: Theme.of(context).brightness == Brightness.dark
+              //                         ? Colors.grey[400]!
+              //                         : Colors.grey[600]!,
+              //                   ),
+              //                 ),
+              //               ),
+              //               style: TextStyle(
+              //                 color: Theme.of(context).brightness == Brightness.dark
+              //                     ? Colors.white
+              //                     : Colors.black, // Set text color based on theme
+              //               ),
             ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(labelText: 'Password'),
+              style: Theme.of(context).textTheme.labelSmall,
               obscureText: true,
             ),
             SizedBox(height: 20),
@@ -44,7 +74,10 @@ class _SignInPageState extends State<SignInPage> {
                );
 
               },
-              child: Text('Sign In'),
+              child: Text(
+                'Sign In',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
             TextButton(
               onPressed: () {

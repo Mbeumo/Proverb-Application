@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,43 @@ class AuthService {
     }
 
   }
+  User? get currentUser {
+    return _auth.currentUser;
+  }
+  Future<void> updateDisplayName(String displayName) async {
+    final user = currentUser;
+
+    if (user != null) {
+      await user.updateDisplayName(displayName);
+      await user.reload(); // Refresh user data
+    }
+  }
+
+  // Update profile picture
+  Future<void> updateProfilePicture(String photoUrl) async {
+    final user = currentUser;
+    if (user != null) {
+      await user.updatePhotoURL(photoUrl);
+      await user.reload(); // Refresh user data
+    }
+  }
+
+  /*Future<void> changeProfilePicture(File imageFile) async {
+    final store = StorageService();
+    final user = currentUser;
+
+    try {
+      // Step 1: Upload image and get a persistent URL
+      final downloadUrl = await store.uploadImage(imageFile,user);
+
+      // Step 2: Update Firebase Auth with the new photo URL
+      await updateProfilePicture(downloadUrl);
+    } catch (e) {
+      // Handle errors (upload failure, etc.)
+      print('Error updating profile picture: $e');
+    }
+  }*/
+
 
   // Sign In Method
   Future<void> signIn({
@@ -49,6 +87,24 @@ class AuthService {
         MaterialPageRoute(builder: (context) => InitialView()),//put the home page or the class name f
        // of the home page
       );*/
+    } on  FirebaseAuthException catch(e){
+      String message='';
+      if(e.code == 'invalid-email') {
+        message='email or password deos not match';
+      }else if(e.code == 'wrong password'){
+        message='email or password deos not match';
+      }else if(e.code == 'too-many-requests'){
+        message='try again after some hours';
+      }else if(e.code =='network-request-failed'){
+        message = 'connect to the internet and try again';
+      }else if(e.code == 'INVALID_LOGIN_CREDENTIALS or invalid-credential'){
+        message='email or password deos not match';
+      }else{
+        message='error'+e.code;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     } catch (e) {
       _showError(context, e.toString());
     }
