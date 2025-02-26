@@ -65,6 +65,7 @@
   "sign up successful": "Sign Up Successful",
   "sign out successful": "Sign Out Successful",
   "email_password_mismatch": "Email or password does not match",
+  "email_and_password_required": "Email and password are required",
   "try_again_later": "Try again after some hours",
   "password_too_weak": "The password is too weak",
   "connect_to_internet": "Connect to the internet and try again",

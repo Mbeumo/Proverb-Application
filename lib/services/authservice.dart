@@ -7,38 +7,41 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Sign Up Method
-  Future<void> signUp({
+  Future<bool> signUp({
     required BuildContext context,
     required String email,
     required String password,
   }) async {
+    bool? register;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text( AppLocalizations.of(context)!.translate('sign up successful')!,)),
       );
+      register=true;
     }on  FirebaseAuthException catch(e){
-      String message='';
+      String messageup='';
       if(e.code == 'weak-password') {
-        message= AppLocalizations.of(context)!.translate('password_too_weak')!;
+        messageup= AppLocalizations.of(context)!.translate('password_too_weak')!;
       }else if(e.code == 'email-already-in-use'){
-        message= AppLocalizations.of(context)!.translate('email_already_exists')!;
+        messageup= AppLocalizations.of(context)!.translate('email_already_exists')!;
       }else if(e.code =='network-request-failed'){
-        message=AppLocalizations.of(context)!.translate('connect_to_internet')!;
+        messageup=AppLocalizations.of(context)!.translate('connect_to_internet')!;
       }else{
-        message='error${e.code}';
+        messageup='unexpected error :${e.code}';
       }
      /* ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
       );*/
-    }catch (e) {
-      _showError(context, e.toString());
+      register=false;
+      _showError(context, messageup);
     }
-
+    return register!;
   }
   User? get currentUser {
     return _auth.currentUser;
   }
+
   Future<void> updateDisplayName(String displayName) async {
     final user = currentUser;
 
@@ -105,12 +108,13 @@ class AuthService {
         message=AppLocalizations.of(context)!.translate('connect_to_internet')!;
       }else if(e.code == 'INVALID_LOGIN_CREDENTIALS or invalid-credential'){
         message=AppLocalizations.of(context)!.translate('email_password_mismatch')!;
+      }else if(e.code == "Email or password does not match"){
+        message=AppLocalizations.of(context)!.translate('email_password_mismatch')!;
       }else{
-        message='error${e.code}';
+        message='unexpected error :${e.code}';
       }
-     
-    } catch (e) {
-      _showError(context, e.toString());
+      _showError(context, message);
+
     }
   }
 

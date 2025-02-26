@@ -41,11 +41,27 @@ class SignUpPage extends StatefulWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async{
-                  await objauthservice.signUp(
-                      context:context, email:_emailController.text, password:_passwordController.text);
-                  await objauthservice.signIn(
-                      context: context, email:_emailController.text, password:_passwordController.text
-                  );
+                  if(_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+                    bool result=await objauthservice.signUp(
+                        context: context,
+                        email: _emailController.text,
+                        password: _passwordController.text);
+                    if(result) {
+                      await objauthservice.signIn(
+                          context: context,
+                          email: _emailController.text,
+                          password: _passwordController.text
+                      );
+                    }
+                  }else if(_emailController.text.isNotEmpty || _passwordController.text.isNotEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(AppLocalizations.of(context)!.translate('email_and_password_required')!))
+                    );
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(AppLocalizations.of(context)!.translate('email_and_password_required')!))
+                    );
+                  }
                 },
                 child: Text( AppLocalizations.of(context)!.translate('sign_up')!,),
               ),
