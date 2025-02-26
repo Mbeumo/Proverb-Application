@@ -49,7 +49,8 @@
 - Open the app and sign in using email and password.
 - If you don’t have an account, tap Sign Up to create one.
 2. **Browse Proverbs**
-- Navigate through different chapters by selecting them from the home screen.
+- from the app menu select Bible proverbs
+- Navigate through different chapters by selecting them.
 - Tap a chapter to see the list of verses inside.
 3. **Taking Notes**
 - Select a verse and tap on the Add Note button.
@@ -67,7 +68,7 @@
 - Ensure you have Flutter installed correctly. Run:
     ```sh
     flutter doctor
-  - Make sure dependencies are installed:
+- Make sure dependencies are installed:
   ``sh
   flutter pub get
 ### ❓ Cannot Sign In or Sign Up
@@ -124,17 +125,17 @@
 
 ## 🙌 Contributions
 - Want to contribute? Follow these steps:
-    1️⃣ Fork the repository.
-    2️⃣ Create a new branch:
+    - 1️⃣ Fork the repository.
+    - 2️⃣ Create a new branch:
         ```sh
         git checkout -b feature-branch
-    3️⃣ Make your changes and commit:
+    - 3️⃣ Make your changes and commit:
         ```sh
         git commit -m "Added new feature"
-    4️⃣ Push to the branch:
+    - 4️⃣ Push to the branch:
         ```sh
         git push origin feature-branch
-    5️⃣ Open a Pull Request.
+    - 5️⃣ Open a Pull Request.
 
 - 📞 Contact
 - 📌 Developer: Mbeumo Briand , Kpama Yves Patrick
