@@ -1,5 +1,6 @@
 # TODO List
 - [ ] arrange the error on the bible proverb page 
+- [ ] arrange the error in the initial page with the carousel slider 
 - [ ] implement the notification functionqalities and see ho to include firebase cloud messaging 
 - [ ] create the backup functionality
 - [ ] implement the restore functionality
