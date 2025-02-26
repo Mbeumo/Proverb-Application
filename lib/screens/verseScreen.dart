@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proverbapp/services/databaseservice.dart';
-import 'Models/chaptermodel.dart';
-import 'Models/versemodel.dart';
+import '../Models/chaptermodel.dart';
+import '../Models/versemodel.dart';
 class VerseListScreen extends StatefulWidget {
   final String chapterId;
 

@@ -149,6 +149,22 @@ class FirestoreService {
         .map((snapshot) =>
         snapshot.docs.map((doc) => Note.fromFirestore(doc)).toList());
   }
+  Stream<List<Note>> getNotesForUser(String userId) {
+    return _firestore
+        .collection('notes')
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => Note.fromFirestore(doc)).toList());
+  }
+  Stream<List<Note>> DeleteNotes(String noteId) {
+    return _firestore
+        .collection('notes')
+        .where('id', isEqualTo: noteId)
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => Note.fromFirestore(doc)).toList());
+  }
 
   // Achievements
   Future<void> updateAchievements(Achievement achievement) async {

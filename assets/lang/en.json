@@ -8,6 +8,14 @@
   "sign_in": "Sign In",
   "setting": "Setting",
   "about": "About Proverbus",
+  "add_note": "Add Note",
+  "input_note": "Enter Note",
+  "save_note": "Save Note",
+  "select_chapter": "Select Chapter",
+  "error_fetching_chapter": "Error Fetching Chapter",
+  "no_chapters_available": "No Chapters Available",
+  "my_notes": "My Notes",
+  "no_notes_available": "No Notes Available",
   "about_the_app": "About the App",
   "app_description": "Proverbus is an application designed to help users explore biblical proverbs, take notes, and track their spiritual journey. It provides daily proverbs, achievements, and customizable settings to enhance your experience.",
   "daily_proverbs_for_motivation": "Daily proverbs for motivation",
@@ -65,5 +73,5 @@
   "add_display_name":"Add Display Name",
   "add_profile_picture":"Add Profile Picture",
   "verse of today": "Verse of the day",
-  "Dont have an account? Sign Up": "Don\\'t have an account? Sign Up"
+  "Dont have an account? Sign Up": "Don't have an account? Sign Up"
 }

@@ -1,20 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:proverbapp/firebase_options.dart';
-import 'package:proverbapp/initial_page.dart';
+import 'package:proverbapp/screens/initial_page.dart';
+import 'package:proverbapp/screens/notefile.dart';
 import 'package:proverbapp/services/authservice.dart';
 import 'package:proverbapp/services/storageservice.dart';
 import 'package:proverbapp/services/translation.dart';
-import 'package:proverbapp/settings.dart';
-import 'package:proverbapp/signin.dart';
-import 'package:proverbapp/signup.dart';
-import 'package:proverbapp/homepage.dart';
-import 'package:proverbapp/account.dart';
-import 'package:proverbapp/editprofile.dart';
-import 'package:proverbapp/biblesproverb.dart';
-import 'package:proverbapp/verseScreen.dart';
+import 'package:proverbapp/screens/settings.dart';
+import 'package:proverbapp/screens/signin.dart';
+import 'package:proverbapp/screens/signup.dart';
+import 'package:proverbapp/screens/homepage.dart';
+import 'package:proverbapp/screens/account.dart';
+import 'package:proverbapp/screens/editprofile.dart';
+import 'package:proverbapp/screens/biblesproverb.dart';
+import 'package:proverbapp/screens/verseScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'aboutus.dart';
+import 'screens/aboutus.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
@@ -96,6 +97,16 @@ class _MyAppState extends State<MyApp> {
         labelSmall: TextStyle(
             fontSize: 12,
             color: Colors.grey[600]), // Example
+        bodySmall: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w400,
+          color: Colors.grey,
+        ),
+        titleMedium: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
       )
     ),
       debugShowCheckedModeBanner: false, // Hide the debug banner
@@ -132,6 +143,7 @@ class _MyAppState extends State<MyApp> {
         '/verseInChap': (context) => VerseListScreen(chapterId: ModalRoute.of(context)!.settings.arguments as String),
         '/settings': (context) => SettingsView(onDarkModeChanged: _updateDarkMode,onLanguageChanged: _updateLanguageParam,),
         '/about':(context) => AboutPage(),
+        '/notes':(Context) => NoteView(),
       },
 
     initialRoute: '/', // This is the starting route InitialView()

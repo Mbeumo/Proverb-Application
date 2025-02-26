@@ -91,7 +91,13 @@ class AboutPage extends StatelessWidget {
         children: [
           Icon(icon, color: Colors.blue),
           const SizedBox(width: 10),
-          Text(text, style: const TextStyle(fontSize: 16)),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 16),
+              softWrap: true, // Allows text to wrap instead of overflowing
+            ),
+          ),
         ],
       ),
     );

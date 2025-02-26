@@ -7,7 +7,7 @@ import 'package:proverbapp/services/databaseservice.dart';
 import 'package:proverbapp/services/translation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'feeding data/chapters.dart';
+import '../feeding data/chapters.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -356,7 +356,7 @@ class AppDrawer extends StatelessWidget {
           ),
           _drawerItem(context, Icons.account_circle, AppLocalizations.of(context)!.translate('account')!, '/account'),
           _drawerItem(context, Icons.book, AppLocalizations.of(context)!.translate('biblical_proverbs')!, '/proverbchap'),
-          _drawerItem(context, Icons.notes, AppLocalizations.of(context)!.translate('notes')!, null),
+          _drawerItem(context, Icons.notes, AppLocalizations.of(context)!.translate('notes')!, '/notes'),
           _drawerItem(context, Icons.backup, AppLocalizations.of(context)!.translate('backup')!, null),
           _drawerItem(context, Icons.restore, AppLocalizations.of(context)!.translate('restore')!, null),
           _drawerItem(context, Icons.settings, AppLocalizations.of(context)!.translate('setting')!, '/settings'),

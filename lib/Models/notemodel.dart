@@ -4,12 +4,14 @@ class Note {
   final String userId;
   final String verseId;
   final String noteContent;
+  final String chapId;
   final DateTime createdAt;
 
   Note({
     required this.id,
     required this.userId,
-    required this.verseId,
+    this.verseId ="No verse",
+    required this.chapId,
     required this.noteContent,
     required this.createdAt,
 
@@ -19,6 +21,7 @@ class Note {
     return {
       'userId': userId,
       'verseId': verseId,
+      'chapId':chapId,
       'noteContent': noteContent,
       'createdAt':Timestamp.fromDate(createdAt),
     };
@@ -31,6 +34,7 @@ class Note {
       id: doc.id,
       userId: data['userId'],
       verseId: data['verseId'],
+      chapId: data['chapId'],
       noteContent: data['noteContent'],
       createdAt: data['createdAt'].toDate(),
     );
