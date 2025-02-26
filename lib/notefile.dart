@@ -5,10 +5,9 @@ class NotefilePage extends StatefulWidget {
   const NotefilePage({super.key});
 
   @override
-  NotefilePage createState() => NotefilePage();
+  _NotefilePageState createState() => _NotefilePageState();
 }
-
-class _SignUpPageState extends State<NotefilePage> {
+class _NotefilePageState extends State<NotefilePage> {
   final AuthService objauthservice = AuthService();
   final TextEditingController _noteController = TextEditingController();
 
