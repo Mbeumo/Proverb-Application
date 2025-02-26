@@ -2,10 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:proverbapp/services/translation.dart';
 
 class InitialView extends StatefulWidget {
-  final VoidCallback onSignUpClicked;
-  final VoidCallback onSignInClicked;
+  final VoidCallback? onSignUpClicked;
+  final VoidCallback? onSignInClicked;
 
   const InitialView({
     Key? key,
@@ -179,7 +180,7 @@ class _InitialViewState extends State<InitialView> with WidgetsBindingObserver {
                     ),
                   ),
                   child: Text(
-                    'Sign Up',
+                    AppLocalizations.of(context)!.translate('sign_up')!,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -201,7 +202,7 @@ class _InitialViewState extends State<InitialView> with WidgetsBindingObserver {
                     ),
                   ),
                   child: Text(
-                    'Sign In',
+                      AppLocalizations.of(context)!.translate('sign_in')!,
                     style: Theme.of(context).textTheme.bodyMedium
                   ),
                 ),

@@ -34,6 +34,17 @@ class FirestoreService {
         return chapters;
     });
   }
+  Stream<List<Chapter>> getChaptersspec(String id) {
+    return _firestore.collection('chapters')
+        .where('id', isEqualTo: id)
+        .snapshots()
+        .map((snapshot) {
+      List<Chapter> chapters = snapshot.docs.map((doc) => Chapter.fromFirestore(doc)).toList();
+      // Sorting by extracting the numeric part from IDs like "proverbs_1"
+
+      return chapters;
+    });
+  }
   int _extractNumber(String id) {
     final match = RegExp(r'_(\d+)$').firstMatch(id);  // Extract digits after "_"
     return match != null ? int.parse(match.group(1)!) : 0;  // Convert to integer

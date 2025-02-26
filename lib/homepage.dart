@@ -4,6 +4,8 @@ import 'package:proverbapp/feeding%20data/verses.dart';
 import 'package:proverbapp/services/administer.dart';
 import 'package:proverbapp/services/authservice.dart';
 import 'package:proverbapp/services/databaseservice.dart';
+import 'package:proverbapp/services/translation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'feeding data/chapters.dart';
 
@@ -86,9 +88,9 @@ class _HomeViewState extends State<HomeView> {
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: 'Achievements'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label:AppLocalizations.of(context)!.translate('home')!,),
+          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label:  AppLocalizations.of(context)!.translate('achievements')!,),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: AppLocalizations.of(context)!.translate('notifications')!,),
         ],
       ),
     );
@@ -125,87 +127,119 @@ class HomeContentView extends StatelessWidget {
         SnackBar(content: Text('Chapters added succesfully')),
       );
     }
-
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            FutureBuilder<String>(
-              future: database.getDailyVerse(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Text(
-                    snapshot.data ?? "No verse available",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  );
-                }
-              },
-            ),
-            Text('Welcome to the Home View!', style: TextStyle(fontSize: 24)),
-            Flexible(
-              flex:2,
-              child:SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: ElevatedButton(
-                  onPressed:() => addverse(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'add verses to chapter 3',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 32.0),
-
-            Flexible(
-                flex:3,
-                child: SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: ElevatedButton(
-                  onPressed: addchapters,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'add chapters',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
+//return container instead of scaffold because i want to design the internal page of this view
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blueAccent, Colors.lightBlueAccent],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
 
+          // Verse of the Day Card
+          FutureBuilder<String>(
+            future: database.getDailyVerse(),
+            builder: (context, snapshot) {
+              return Card(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(
+                      AppLocalizations.of(context)!.translate('verse of today')!,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
+                      ),
+                      const SizedBox(height: 10),
+                      snapshot.connectionState == ConnectionState.waiting
+                      ? CircularProgressIndicator()
+                      : Text(
+                        snapshot.data ?? AppLocalizations.of(context)!.translate('verse_unavailable')!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          // Social media display
+          _buildLinksSection(context),
+          const SizedBox(height: 30),
+
+          // Action Buttons
+          ElevatedButton.icon(
+            onPressed: () {
+              addverse();
+            },
+            icon: Icon(Icons.add, color: Colors.white),
+            label: Text(AppLocalizations.of(context)!.translate('add_verse')!, style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepOrange,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+          ),
+        ],
+      ),
     );
-
   }
 
+  Widget _buildLinksSection(context) {
+    return Column(
+      children: [
+        Divider(),
+        Text("${AppLocalizations.of(context)!.translate('follow_us_on')!}:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildSocialMediaCard(Icons.video_library, "YouTube", "https://youtube.com"),
+            SizedBox(width: 20),
+            _buildSocialMediaCard(Icons.facebook, "Facebook", "https://facebook.com"),
+            SizedBox(width: 20),
+            _buildSocialMediaCard(Icons.web, "Website", "https://jw.org"),
+          ],
+        ),
+      ],
+    );
+  }
 
+  Widget _buildSocialMediaCard(IconData icon, String name, String url) {
+    return GestureDetector(
+      onTap: () => _launchURL(url),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: Colors.blue),
+              const SizedBox(height: 5),
+              Text(name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  void _launchURL(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
 }
 class AchievementsView extends StatefulWidget {
   const AchievementsView({super.key});
@@ -233,28 +267,72 @@ class _AchievementsViewState extends State<AchievementsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: allAchievements.length,
-        itemBuilder: (context, index) {
-          final achievement = allAchievements[index];
-          final isEarned = earnedAchievements.contains(achievement);
-          return ListTile(
-            leading: Icon(isEarned ? Icons.check_circle : Icons.circle_outlined),
-            title: Text(achievement),
-            subtitle: Text(isEarned ? "Earned" : "Not Earned"),
-          );
-        },
+      body: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              blurRadius: 5,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        //use the same gradient as the home page
+        /*decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blueAccent, Colors.lightBlueAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),*/
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: allAchievements.length,
+                itemBuilder: (context, index) {
+                  final achievement = allAchievements[index];
+                  final isEarned = earnedAchievements.contains(achievement);
+                  return ListTile(
+                    leading: Icon(isEarned ? Icons.check_circle : Icons.circle_outlined),
+                    title: Text(achievement),
+                    subtitle: Text(isEarned ? "Earned" : "Not Earned"),
+                  );
+                },
+              ),
+            ),
+            //_buildLinksSection(),
+          ],
+        ),
       ),
     );
   }
 }
+
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Notifications View', style: TextStyle(fontSize: 24)),
+        child: Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                blurRadius: 5,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Text('Notifications View', style: TextStyle(fontSize: 24)),
+        )
     );
   }
 }
@@ -276,13 +354,13 @@ class AppDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
           ),
-          _drawerItem(context, Icons.account_circle, 'Account', '/account'),
-          _drawerItem(context, Icons.book, 'Biblical Proverbs', '/proverbchap'),
-          _drawerItem(context, Icons.notes, 'Notes', null),
-          _drawerItem(context, Icons.backup, 'Back up', null),
-          _drawerItem(context, Icons.restore, 'Restore', null),
-          _drawerItem(context, Icons.settings, 'Settings', '/settings'),
-          _drawerItem(context, Icons.info, 'About', '/about'),
+          _drawerItem(context, Icons.account_circle, AppLocalizations.of(context)!.translate('account')!, '/account'),
+          _drawerItem(context, Icons.book, AppLocalizations.of(context)!.translate('biblical_proverbs')!, '/proverbchap'),
+          _drawerItem(context, Icons.notes, AppLocalizations.of(context)!.translate('notes')!, null),
+          _drawerItem(context, Icons.backup, AppLocalizations.of(context)!.translate('backup')!, null),
+          _drawerItem(context, Icons.restore, AppLocalizations.of(context)!.translate('restore')!, null),
+          _drawerItem(context, Icons.settings, AppLocalizations.of(context)!.translate('setting')!, '/settings'),
+          _drawerItem(context, Icons.info, AppLocalizations.of(context)!.translate('about')!, '/about'),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proverbapp/services/authservice.dart';
+import 'package:proverbapp/services/translation.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
@@ -16,7 +17,7 @@ class SignUpPage extends StatefulWidget {
     @override
   Widget build(BuildContext context) {
       return Scaffold(
-        appBar: AppBar(title: Text('Sign Up')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.translate('sign_up')!,)),
         body: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -30,11 +31,11 @@ class SignUpPage extends StatefulWidget {
               ),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('email')!,),
               ),
               TextField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('password')!,),
                 obscureText: true,
               ),
               SizedBox(height: 20),
@@ -46,7 +47,7 @@ class SignUpPage extends StatefulWidget {
                       context: context, email:_emailController.text, password:_passwordController.text
                   );
                 },
-                child: Text('Sign Up'),
+                child: Text( AppLocalizations.of(context)!.translate('sign_up')!,),
               ),
             ],
           ),

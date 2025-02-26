@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proverbapp/services/translation.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -7,7 +8,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Proverbus'),
+        title: Text(AppLocalizations.of(context)!.translate('about')!,),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
@@ -38,42 +39,40 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'About the App',
+              Text(
+                  AppLocalizations.of(context)!.translate('about_the_app')!,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Proverbus is an application designed to help users explore biblical proverbs, '
-                    'take notes, and track their spiritual journey. It provides daily proverbs, '
-                    'achievements, and customizable settings to enhance your experience.',
-                style: TextStyle(fontSize: 16),
+              Text(
+                  AppLocalizations.of(context)!.translate('app_description')!,
+                  style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Key Features:',
+              Text(
+                AppLocalizations.of(context)!.translate('key_features')!,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              _buildFeatureItem(Icons.today, 'Daily proverbs for motivation'),
-              _buildFeatureItem(Icons.emoji_events, 'Track your achievements'),
-              _buildFeatureItem(Icons.notifications, 'Daily notifications for new proverbs'),
-              _buildFeatureItem(Icons.book, 'Explore various proverbs by chapters'),
-              _buildFeatureItem(Icons.note, 'Take and organize notes easily'),
-              _buildFeatureItem(Icons.settings, 'Customize settings: themes, notifications, language'),
+              _buildFeatureItem(Icons.today,AppLocalizations.of(context)!.translate('daily_proverbs_for_motivation')!,),
+              _buildFeatureItem(Icons.emoji_events,AppLocalizations.of(context)!.translate('track_your_achievements')!,),
+              _buildFeatureItem(Icons.notifications,AppLocalizations.of(context)!.translate('daily_notifications_for_new_proverbs')!,),
+              _buildFeatureItem(Icons.book, AppLocalizations.of(context)!.translate('explore_various_proverbs_by_chapters')!,),
+              _buildFeatureItem(Icons.note, AppLocalizations.of(context)!.translate('take_and_organize_notes_easily')!,),
+              _buildFeatureItem(Icons.settings, AppLocalizations.of(context)!.translate('customize_settings')!,),
               const SizedBox(height: 20),
-              const Text(
-                'Contact & Support',
+              Text(
+                AppLocalizations.of(context)!.translate('contact_support')!,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              _buildContactItem(Icons.email, 'Email', 'support@proverbus.com'),
-              _buildContactItem(Icons.web, 'Website', 'www.proverbus.com'),
-              _buildContactItem(Icons.phone, 'Phone', '+123 456 7890'),
+              _buildContactItem(Icons.email, AppLocalizations.of(context)!.translate('email')!, 'mbeumobriand@gmail.com'),
+              _buildContactItem(Icons.web, AppLocalizations.of(context)!.translate('website')!, 'www.proverbus.com'),
+              _buildContactItem(Icons.phone,AppLocalizations.of(context)!.translate('phone')!, '+237 682740678'),
               const SizedBox(height: 20),
               Center(
                 child: Text(
-                  '© 2025 Proverbus. All rights reserved.',
+                  '© 2025 Proverbus. ${AppLocalizations.of(context)!.translate('all_rights_reserved')!}.',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ),

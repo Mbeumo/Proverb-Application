@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proverbapp/services/authservice.dart';
+import 'package:proverbapp/services/translation.dart';
 class AccountView extends StatelessWidget {
   final AuthService authService;
 
@@ -12,7 +13,7 @@ class AccountView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account Information'),
+        title: Text(AppLocalizations.of(context)!.translate('account_information')!,),
         backgroundColor: Colors.blue,
         elevation: 0,
       ),
@@ -38,7 +39,7 @@ class AccountView extends StatelessWidget {
 
             // User Name
             Text(
-              user?.displayName ?? 'Guest User',
+              user?.displayName ?? AppLocalizations.of(context)!.translate('guest_user')!,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -48,7 +49,7 @@ class AccountView extends StatelessWidget {
 
             // Email
             Text(
-              user?.email ?? 'No email provided',
+              user?.email ?? AppLocalizations.of(context)!.translate('no_email_provided')!,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
@@ -69,7 +70,7 @@ class AccountView extends StatelessWidget {
                     // Account Creation Date
                     ListTile(
                       leading: const Icon(Icons.calendar_today, color: Colors.blue),
-                      title: const Text('Account Created'),
+                      title: Text(AppLocalizations.of(context)!.translate('account_created')!,),
                       subtitle: Text(
                         user?.metadata.creationTime?.toString() ?? 'Unknown',
                         style: const TextStyle(fontSize: 14),
@@ -80,7 +81,9 @@ class AccountView extends StatelessWidget {
                     // Last Sign-In
                     ListTile(
                       leading: const Icon(Icons.access_time, color: Colors.blue),
-                      title: const Text('Last Sign-In'),
+                      title: Text(
+                        AppLocalizations.of(context)!.translate('last_sign_in')!,
+                        style: TextStyle(fontSize: 16),),
                       subtitle: Text(
                         user?.metadata.lastSignInTime?.toString() ?? 'Unknown',
                         style: const TextStyle(fontSize: 14),
@@ -104,8 +107,8 @@ class AccountView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text(
-                'Edit Profile',
+              child: Text(
+                AppLocalizations.of(context)!.translate('edit_profile')!,
                 style: TextStyle(fontSize: 16),
               ),
             ),

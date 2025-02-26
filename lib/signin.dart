@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proverbapp/services/authservice.dart';
+import 'package:proverbapp/services/translation.dart';
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -15,7 +16,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign In')),
+      appBar: AppBar(title: Text( AppLocalizations.of(context)!.translate('sign_in')!,)),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -29,7 +30,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('email')!,),
               style: Theme.of(context).textTheme.labelSmall
             //InputDecoration(
               //                 labelText: 'Email',
@@ -62,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.translate('password')!,),
               style: Theme.of(context).textTheme.labelSmall,
               obscureText: true,
             ),
@@ -75,7 +76,7 @@ class _SignInPageState extends State<SignInPage> {
 
               },
               child: Text(
-                'Sign In',
+                AppLocalizations.of(context)!.translate('sign_in')!,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -83,7 +84,7 @@ class _SignInPageState extends State<SignInPage> {
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
               },
-              child: Text('Don\'t have an account? Sign Up'),
+              child: Text( AppLocalizations.of(context)!.translate('Dont have an account? Sign Up')!,),
             ),
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:proverbapp/services/authservice.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:proverbapp/services/storageservice.dart';
+import 'package:proverbapp/services/translation.dart';
 
 class EditProfileView extends StatefulWidget {
   final AuthService authService;
@@ -50,14 +51,14 @@ class _EditProfileViewState extends State<EditProfileView> {
 
         // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile updated successfully!')),
+         SnackBar(content: Text( AppLocalizations.of(context)!.translate('profile_updated_successfully')!,)),
         );
 
         // Navigate back to AccountView
         Navigator.pop(context);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update profile: $e')),
+          SnackBar(content: Text("${AppLocalizations.of(context)!.translate('failed_to_update_profile')!} $e")),
         );
       }
     }
@@ -119,7 +120,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title:Text( AppLocalizations.of(context)!.translate('edit_profile')!,),
         backgroundColor: Colors.blue,
         elevation: 0,
       ),
@@ -145,13 +146,13 @@ class _EditProfileViewState extends State<EditProfileView> {
               // Display Name Field
               TextFormField(
                 controller: _displayNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Display Name',
+                decoration:InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate('display_name')!,
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a display name';
+                    return   AppLocalizations.of(context)!.translate('enter_name');
                   }
                   return null;
                 },
@@ -168,8 +169,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text(
-                  'Save Changes',
+                child:Text(
+                  AppLocalizations.of(context)!.translate('save_changes')!,
                   style: TextStyle(fontSize: 16),
                 ),
               ),

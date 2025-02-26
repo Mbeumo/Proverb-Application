@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proverbapp/services/translation.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,18 +15,22 @@ class AuthService {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign Up Successful')),
+        SnackBar(content: Text( AppLocalizations.of(context)!.translate('sign up successful')!,)),
       );
     }on  FirebaseAuthException catch(e){
       String message='';
       if(e.code == 'weak-password') {
-        message='the passord is too weak';
+        message= AppLocalizations.of(context)!.translate('password_too_weak')!;
       }else if(e.code == 'email-already-in-use'){
-          message='the email already exist';
+        message= AppLocalizations.of(context)!.translate('email_already_exists')!;
+      }else if(e.code =='network-request-failed'){
+        message=AppLocalizations.of(context)!.translate('connect_to_internet')!;
+      }else{
+        message='error${e.code}';
       }
-      ScaffoldMessenger.of(context).showSnackBar(
+     /* ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
-      );
+      );*/
     }catch (e) {
       _showError(context, e.toString());
     }
@@ -78,7 +83,8 @@ class AuthService {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign in successful')),
+        SnackBar(content: Text( AppLocalizations.of(context)!.translate('sign in successful')!,
+        )),
       );
       Navigator.pushNamed(context, '/HOME');
 
@@ -90,21 +96,19 @@ class AuthService {
     } on  FirebaseAuthException catch(e){
       String message='';
       if(e.code == 'invalid-email') {
-        message='email or password deos not match';
+        message=AppLocalizations.of(context)!.translate('email_password_mismatch')!;
       }else if(e.code == 'wrong password'){
-        message='email or password deos not match';
+        message=AppLocalizations.of(context)!.translate('email_password_mismatch')!;
       }else if(e.code == 'too-many-requests'){
-        message='try again after some hours';
+        message=AppLocalizations.of(context)!.translate('try_again_later')!;
       }else if(e.code =='network-request-failed'){
-        message = 'connect to the internet and try again';
+        message=AppLocalizations.of(context)!.translate('connect_to_internet')!;
       }else if(e.code == 'INVALID_LOGIN_CREDENTIALS or invalid-credential'){
-        message='email or password deos not match';
+        message=AppLocalizations.of(context)!.translate('email_password_mismatch')!;
       }else{
-        message='error'+e.code;
+        message='error${e.code}';
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+     
     } catch (e) {
       _showError(context, e.toString());
     }
@@ -115,7 +119,7 @@ class AuthService {
     try {
       await _auth.signOut();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign Out Successful')),
+        SnackBar(content: Text( AppLocalizations.of(context)!.translate('sign out successful')!,)),
       );
     } catch (e) {
       _showError(context, e.toString());
