@@ -7,4 +7,4 @@
 - [ ] Do the required translation for each of the files
 - [ ] Add the search functionality to the home page
 - [ ] Add the reminder functionality
-- [x] design the nt view (Completed)
+- [x] design the note view (Completed)
